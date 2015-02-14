@@ -67,8 +67,9 @@ class Tag extends Object {
 
 	public var id : SId;
 	public var tag : String;
+	//TODO: we shouldn't use the same name for both the ID and the object. I'm surprised this even works.
 	@:relation(project) public var project : Project;
-	
+
 	static public function topTags( n : Int ) : List<{ tag:String, count: Int }> {
 		return cast Manager.cnx.request("SELECT tag, COUNT(*) as count FROM Tag GROUP BY tag ORDER BY count DESC LIMIT " + n).results();
 	}
@@ -86,7 +87,7 @@ class Version extends Object {
 	public var previewNum : SNull<Int>;
 	@:skip public var name(get, never):String;
 	function get_name():String return toSemver();
-	
+
 	public function toSemver():SemVer {
 		return {
 			major: this.major,
@@ -100,7 +101,7 @@ class Version extends Object {
 	public var comments : String;
 	public var downloads : Int;
 	public var documentation : SNull<String>;
-	
+
 	static public function latest( n : Int ) {
 		return manager.search(true, { orderBy: -date, limit: n } );
 	}
@@ -111,6 +112,7 @@ class Version extends Object {
 
 }
 
+//TODO: we shouldn't use the same name for both the ID and the object. I'm surprised this even works.
 @:id(user,project)
 class Developer extends Object {
 	
