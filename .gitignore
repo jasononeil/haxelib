@@ -1,8 +1,15 @@
+# Compiled files
 *.exe
 *.n
 *.zip
-*.tmp
-*.db
 server
 package
 test/libraries/*.zip
+dump/
+
+# Runtime files
+*.tmp
+*.db
+
+# IDE files
+.idea

@@ -1,5 +1,6 @@
+# The old haxelib website (still on the 3.0 repo)
 -cp src
--neko server/index.n
+-neko server/old.n
 -main tools.haxelib.Site
 -dce no
 
