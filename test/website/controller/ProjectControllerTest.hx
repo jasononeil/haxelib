@@ -23,46 +23,105 @@ class ProjectControllerTest extends BuddySuite {
 			it("Should show the project view for the latest version", function (done) {
 				whenIVisit( "/p/detox" )
 					.onTheApp( haxelibSite )
-					.itShouldLoad( ProjectController, "project", [] )
+					.itShouldLoad( ProjectController, "project", ["detox"] )
 					.itShouldReturn( ViewResult, function (result) {
-						var title:String = result.data['title'];
-//						(result.data['title']:String).should.be("Hello World");
-						Assert.same( result.templateSource, FromEngine("project/project") );
-						Assert.same( result.layoutSource, FromEngine("layout.html") );
 						// TODO: Check we got the latest version.
+						// TODO: Check we got the correct project.
+						Assert.same( FromEngine("project/version.html"), result.templateSource );
+						Assert.same( FromEngine("layout.html"), result.layoutSource );
 					})
 					.andFinishWith( done );
 			});
 		});
 
 		describe("When I view a project version", {
-			it("Should show me the README for the current version", {
-				// check `viewResult`...
+
+			var whenILoadAProjectVersion = whenIVisit( "/p/detox/1.0.0-rc.1/" ).onTheApp( haxelibSite );
+			it("Should load the correct layout / view", function (done) {
+				whenILoadAProjectVersion
+				.itShouldLoad( ProjectController, "version", ["detox","1.0.0-rc.1"] )
+				.itShouldReturn( ViewResult, function(result) {
+					Assert.same( FromEngine("project/version.html"), result.templateSource );
+					Assert.same( FromEngine("layout.html"), result.layoutSource );
+				}).andFinishWith( done );
 			});
-			it("Should show me the file list for the current version", {
-				// check `viewResult`...
+			it("Should show me the README for the current version", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
 			});
-			it("Should show me a list of all versions", {
-				// check `viewResult`...
+			it("Should show me the file list for the current version", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
 			});
-			it("Should show me the haxelibs this depends on", {
-				// check `viewResult`...
+			it("Should show me a list of all versions", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
 			});
-			it("Should show me the haxelibs that depend on this", {
-				// check `viewResult`...
+			it("Should show me the haxelibs this depends on", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
 			});
-			it("Should let me know if there is a more recent version");
-			it("Should let me know if this version is not considered stable");
+			it("Should show me the haxelibs that depend on this", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
+			});
+			it("Should let me know if there is a more recent version", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
+			});
+			it("Should let me know if this version is not considered stable", function (done) {
+				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
+					// TODO: add appropriate tests here...
+				}).andFinishWith( done );
+			});
 		});
 
 		describe("When I view a project's files", {
-			it("Should show me that file's source code in line");
-			it("Should render markdown files as HTML");
-			it("Should show binary files size and a link to download it");
+			it("Should show me that file's source code in line", function (done) {
+				whenIVisit( "/p/detox/1.0.0-rc.8/files/src/Detox.hx" )
+					.onTheApp( haxelibSite )
+					.itShouldLoad( ProjectController, "file", ["detox","1.0.0-rc.8",["src","Detox.hx"]] )
+					.itShouldReturn( ViewResult, function (result) {
+						// TODO: Check it shows the source code for the file.
+					})
+					.andFinishWith( done );
+			});
+			it("Should render markdown files as HTML", function (done) {
+				whenIVisit( "/p/detox/1.0.0-rc.8/files/README.md" )
+					.onTheApp( haxelibSite )
+					.itShouldLoad( ProjectController, "file", ["detox","1.0.0-rc.8",["README.md"]] )
+					.itShouldReturn( ViewResult, function (result) {
+						// TODO: Check it shows the rendered markdown.
+					})
+					.andFinishWith( done );
+			});
+			it("Should show binary files size and a link to download it", function (done) {
+				whenIVisit( "/p/hxssl/3.0.0-alpha/files/ndll/Linux64/hxssl.ndll" )
+					.onTheApp( haxelibSite )
+					.itShouldLoad( ProjectController, "file", ["hxssl","3.0.0-alpha",["ndll","Linux64","hxssl.ndll"]] )
+					.itShouldReturn( ViewResult, function (result) {
+						// TODO: Check it shows the file name and download size.
+					})
+					.andFinishWith( done );
+			});
 		});
 
 		describe("When I view a projects docs", {
-			it("Should show the correct documentation for this version");
+			it("Should show the correct documentation for this version", function(done) {
+				whenIVisit( "/p/detox/1.0.0-rc.8/doc/dtx.widget.Widget" )
+					.onTheApp( haxelibSite )
+					.itShouldLoad( ProjectController, "docs", ["detox","1.0.0-rc.8","dtx.widget.Widget"] )
+					.itShouldReturn( ViewResult, function (result) {
+						// TODO: Check it loads the correct view, documentation is rendered, etc.
+					})
+					.andFinishWith( done );
+			});
 		});
 	}
 }

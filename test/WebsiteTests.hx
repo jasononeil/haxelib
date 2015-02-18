@@ -1,5 +1,6 @@
 package;
 
+import website.api.ProjectListApi;
 import ufront.app.UfrontApplication;
 import ufront.mailer.*;
 import ufront.auth.EasyAuth;
@@ -7,6 +8,8 @@ import ufront.view.TemplatingEngines;
 import twl.webapp.*;
 import twl.*;
 import buddy.*;
+import mockatoo.Mockatoo.*;
+using mockatoo.Mockatoo;
 
 @:build(buddy.GenerateMain.build(["website"]))
 class WebsiteTests {

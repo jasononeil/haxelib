@@ -12,7 +12,7 @@ class HomeController extends Controller {
 
 	@:route("/")
 	public function homepage() {
-		var latestProjects = projectListApi.latest( 20 );
+		var latestProjects = projectListApi.latest( 20 ).sure();
 		// "Welcome, old site, Latest Releases, Browse projects";
 		return new ViewResult({
 			title: "Haxelib",
@@ -39,7 +39,7 @@ class HomeController extends Controller {
 			return new ViewResult({
 				title: 'Tag: $tagName',
 				description: 'You are currently viewing a list of all project on haxelib with the tag "$tagName"',
-				projects: projectListApi.byTag( tagName )
+				projects: projectListApi.byTag( tagName ).sure()
 			}, "projectList.html");
 		}
 	}
@@ -49,7 +49,7 @@ class HomeController extends Controller {
 		return new ViewResult({
 			title: 'All Haxelibs',
 			description: 'You are currently viewing a list of every project on haxelib',
-			projects: projectListApi.all()
+			projects: projectListApi.all().sure()
 		}, "projectList.html");
 	}
 
@@ -59,7 +59,7 @@ class HomeController extends Controller {
 			return new ViewResult({
 				title: 'Search for "${args.v}"',
 				description: 'Searching project names and descriptions for the word "${args.v}',
-				projects: projectListApi.search( args.v )
+				projects: projectListApi.search( args.v ).sure()
 			}, "searchForm.html");
 		}
 		else {

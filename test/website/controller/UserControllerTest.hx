@@ -23,10 +23,10 @@ class UserControllerTest extends BuddySuite {
 			it("Should show me that users profile and their projects", function (done) {
 				whenIVisit( "/u/jason" )
 					.onTheApp( haxelibSite )
-					.itShouldLoad( UserController, "profile", [] )
+					.itShouldLoad( UserController, "profile", ["jason"] )
 					.itShouldReturn( ViewResult, function (result) {
 						var title:String = result.data['title'];
-						(result.data['title']:String).should.be("Hello World");
+						(result.data['title']:String).should.be("View user jason");
 						Assert.same( result.templateSource, FromEngine("user/profile") );
 						Assert.same( result.layoutSource, FromEngine("layout.html") );
 					})

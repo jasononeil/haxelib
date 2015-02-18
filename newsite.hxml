@@ -18,6 +18,7 @@
 -lib buddy
 -lib mockatoo
 -lib utest
+--no-inline
 -D server
 -main WebsiteTests
 -neko bin/websitetest.n

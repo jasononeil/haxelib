@@ -20,7 +20,7 @@ class RSSControllerTest extends BuddySuite {
 
 		describe("When I try to view the RSS feed", {
 			it("Should give me some valid XML with the latest updates", function (done) {
-				whenIVisit( "/" )
+				whenIVisit( "/rss" )
 					.onTheApp( haxelibSite )
 					.itShouldLoad( RSSController, "rss", [{number:null}] )
 					.itShouldReturn( ContentResult, function (result) {
@@ -29,7 +29,18 @@ class RSSControllerTest extends BuddySuite {
 					})
 					.andFinishWith( done );
 			});
-			it("Should let me set the number of entries to include");
+			it("Should let me set the number of entries to include", function (done) {
+				whenIVisit( "/rss" )
+				.withTheParams([ "number"=>"3" ])
+				.onTheApp( haxelibSite )
+				.itShouldLoad( RSSController, "rss", [{number:3}] )
+				.itShouldReturn( ContentResult, function (result) {
+					result.contentType.should.be( "text/xml" );
+					var rss = Xml.parse( result.content );
+					// TODO: check that 3 results were loaded.
+				})
+				.andFinishWith( done );
+			});
 		});
 	}
 }

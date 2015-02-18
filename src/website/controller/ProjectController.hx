@@ -7,21 +7,29 @@ class ProjectController extends Controller {
 
 	@:route("/$projectName")
 	public function project( projectName:String ) {
-		return 'View project $projectName';
+		var latestVersion = "1.0.0";
+		return version( projectName, latestVersion );
 	}
 
 	@:route("/$projectName/$semver")
 	public function version( projectName:String, semver:String ) {
-		return 'View project $projectName version $semver';
+		return new ViewResult({
+			title: 'View project $projectName version $semver',
+		}, "version.html");
 	}
 
 	@:route("/$projectName/$semver/doc/$typePath")
 	public function docs( projectName:String, semver:String, typePath:String ) {
-		return 'View project $projectName docs for $typePath';
+		return new ViewResult({
+			title: 'View project $projectName docs for $typePath',
+		});
 	}
 
-	@:route("/$projectName/$semver/files/$filePath")
-	public function file( projectName:String, semver:String, filePath:String ) {
-		return 'View project $projectName files: $filePath';
+	@:route("/$projectName/$semver/files/*")
+	public function file( projectName:String, semver:String, rest:Array<String> ) {
+		var filePath = rest.join("/");
+		return new ViewResult({
+			title: 'View project $projectName files: $filePath',
+		});
 	}
 }

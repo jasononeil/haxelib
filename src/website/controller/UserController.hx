@@ -7,7 +7,7 @@ class UserController extends Controller {
 
 	@:route("/$username")
 	public function profile( username:String ) {
-		return 'View user $username';
+		return new ViewResult({ title: 'View user $username' });
 	}
 
 	// Future: edit your own profile.  Especially password resets.
