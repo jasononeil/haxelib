@@ -45,8 +45,8 @@ class Project extends Object {
 	public var website : String;
 	public var license : String;
 	public var downloads : Int = 0;
-	@:relation(owner) public var owner : User;
-	@:relation(version) public var version : SNull<Version>;
+	@:relation(owner) public var ownerObj : User;
+	@:relation(version) public var versionObj : SNull<Version>;
 	
 	static public function containing( word:String ) : List<{ id: Int, name: String }> {
 		var ret = new List();
@@ -68,7 +68,7 @@ class Tag extends Object {
 	public var id : SId;
 	public var tag : String;
 	//TODO: we shouldn't use the same name for both the ID and the object. I'm surprised this even works.
-	@:relation(project) public var project : Project;
+	@:relation(project) public var projectObj : Project;
 
 	static public function topTags( n : Int ) : List<{ tag:String, count: Int }> {
 		return cast Manager.cnx.request("SELECT tag, COUNT(*) as count FROM Tag GROUP BY tag ORDER BY count DESC LIMIT " + n).results();
@@ -79,7 +79,7 @@ class Tag extends Object {
 class Version extends Object {
 
 	public var id : SId;
-	@:relation(project) public var project : Project;
+	@:relation(project) public var projectObj : Project;
 	public var major : Int;
 	public var minor : Int;
 	public var patch : Int;
@@ -116,8 +116,8 @@ class Version extends Object {
 @:id(user,project)
 class Developer extends Object {
 	
-	@:relation(user) public var user : User;
-	@:relation(project) public var project : Project;
+	@:relation(user) public var userObj : User;
+	@:relation(project) public var projectObj : Project;
 
 }
 

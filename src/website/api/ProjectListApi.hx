@@ -22,7 +22,7 @@ class ProjectListApi extends UFApi {
 			var joins = Developer.manager.search( $user==user.id );
 			// TODO: It would be better to do a single query on all IDs, rather than a single query for each project.
 			// Unfortunately, the current set up of the "Developer" model doesn't give us access to the ID.
-			var theirProjects = joins.map(function (j) return j.project);
+			var theirProjects = joins.map(function (j) return j.projectObj);
 			return Success( theirProjects );
 		}
 		catch ( e:Dynamic ) return Failure( Error.withData('Failed to get list of projects belong to $username',e) );
@@ -33,7 +33,7 @@ class ProjectListApi extends UFApi {
 			var tagJoins = Tag.manager.search( $tag==tag );
 			// TODO: It would be better to do a single query on all IDs, rather than a single query for each project.
 			// Unfortunately, the current set up of the "Tag" model doesn't give us access to the ID.
-			var projects = tagJoins.map(function (j) return j.project);
+			var projects = tagJoins.map(function (j) return j.projectObj);
 			return Success( projects );
 		}
 		catch ( e:Dynamic ) return Failure( Error.withData('Failed to get list of projects with tag $tag',e) );

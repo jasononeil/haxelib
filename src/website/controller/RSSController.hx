@@ -71,7 +71,7 @@ class RSSController extends Controller {
 			createChildWithContent( item, "guid", url+"/p/"+project.name+"?v="+version.id );
 			var date = Date.fromString( version.date ).format( "%a, %e %b %Y %H:%M:%S %z" );
 			createChildWithContent( item, "pubDate", date );
-			createChildWithContent( item, "author", project.owner.name );
+			createChildWithContent( item, "author", project.ownerObj.name );
 			createChildWithContent( item, "description", description );
 		}
 

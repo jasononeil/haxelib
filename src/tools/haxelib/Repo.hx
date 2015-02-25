@@ -58,7 +58,7 @@ class Repo implements SiteApi {
 		
 		return {
 			name : p.name,
-			curversion : if( p.version == null ) null else p.version.toSemver(),
+			curversion : if( p.versionObj == null ) null else p.versionObj.toSemver(),
 			desc : p.description,
 			versions: 
 				[for ( v in vl ) {
@@ -66,7 +66,7 @@ class Repo implements SiteApi {
 					comments : v.comments, 
 					date : v.date
 				}],
-			owner : p.owner.name,
+			owner : p.ownerObj.name,
 			website : p.website,
 			license : p.license,
 			tags : Tag.manager.search($project == p.id).map(function(t) return t.tag),
@@ -112,7 +112,7 @@ class Repo implements SiteApi {
 		if( p == null )
 			return;
 		for( d in Developer.manager.search({ project : p.id }) )
-			if( d.user.name == user )
+			if( d.userObj.name == user )
 				return;
 		throw "User '"+user+"' is not a developer of project '"+prj+"'";
 	}
@@ -157,18 +157,18 @@ class Repo implements SiteApi {
 			p.description = infos.description;
 			p.website = infos.url;
 			p.license = infos.license;
-			p.owner = u;
+			p.ownerObj = u;
 			p.insert();
 			for( u in devs ) {
 				var d = new Developer();
-				d.user = u;
-				d.project = p;
+				d.userObj = u;
+				d.projectObj = p;
 				d.insert();
 			}
 			for( tag in tags ) {
 				var t = new Tag();
 				t.tag = tag;
-				t.project = p;
+				t.projectObj = p;
 				t.insert();
 			}
 		}
@@ -177,7 +177,7 @@ class Repo implements SiteApi {
 		var pdevs = Developer.manager.search({ project : p.id });
 		var isdev = false;
 		for( d in pdevs )
-			if( d.user.id == u.id ) {
+			if( d.userObj.id == u.id ) {
 				isdev = true;
 				break;
 			}
@@ -189,7 +189,7 @@ class Repo implements SiteApi {
 
 		// update public infos
 		if( infos.description != p.description || p.website != infos.url || p.license != infos.license || pdevs.length != devs.length || tags.join(":") != curtags ) {
-			if( u.id != p.owner.id )
+			if( u.id != p.ownerObj.id )
 				throw "Only project owner can modify project infos";
 			p.description = infos.description;
 			p.website = infos.url;
@@ -200,8 +200,8 @@ class Repo implements SiteApi {
 					d.delete();
 				for( u in devs ) {
 					var d = new Developer();
-					d.user = u;
-					d.project = p;
+					d.userObj = u;
+					d.projectObj = p;
 					d.insert();
 				}
 			}
@@ -211,7 +211,7 @@ class Repo implements SiteApi {
 				for( tag in tags ) {
 					var t = new Tag();
 					t.tag = tag;
-					t.project = p;
+					t.projectObj = p;
 					t.insert();
 				}
 			}
@@ -269,7 +269,7 @@ class Repo implements SiteApi {
 		
 		// add new version
 		var v = new Version();
-		v.project = p;
+		v.projectObj = p;
 		v.major = semVer.major;
 		v.minor = semVer.minor;
 		v.patch = semVer.patch;
@@ -282,7 +282,7 @@ class Repo implements SiteApi {
 		v.documentation = doc;
 		v.insert();
 
-		p.version = v;
+		p.versionObj = v;
 		p.update();
 		return "Version " + v.toSemver() + " (id#" + v.id + ") added";
 	}
