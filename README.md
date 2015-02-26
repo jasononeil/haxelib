@@ -7,6 +7,19 @@ For documentation, please refer to [haxe.org](http://haxe.org/haxelib)
 
 -----
 
+### Running the website for development
+
+(Work in progress instructions, 2015-02-27)
+
+```
+# Initial install
+git clone https://github.com/jasononeil/haxelib.git
+git checkout feature/newsite
+haxelib install newsite.hxml
+haxelib git ufront-mvc https://github.com/ufront/ufront-mvc.git
+./site.sh
+```
+
 ### About this repo
 
 Build files:

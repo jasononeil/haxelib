@@ -1,11 +1,19 @@
 #!/bin/bash
 
-# Build the site, copy components over
+# See README.md for initial setup instructions.
+
+# Make sure our output directories exist
 
 mkdir -p www/legacy
 mkdir -p www/api/3.0
+mkdir -p www/files/3.0
+
+# Compile the old site first, to get the legacy API etc, and then the new site.
 
 haxe site.hxml
+haxe newsite.hxml
+
+# Copy various assets
 
 cp src/tools/haxelib/.htaccess www/
 cp -ar src/tools/haxelib/tmpl www/
@@ -21,7 +29,7 @@ cp src/tools/legacyhaxelib/haxelib.css www/legacy/
 if [ ! -f www/haxelib.db ];
 then
     cd www
-    neko index.n setup
+    neko old.n setup
     cd ..
 fi
 
@@ -44,6 +52,7 @@ chmod a+w www/legacy/haxelib.db
 
 
 cd www
+
 # starting server on port 2000, because binding port 80 requires root privileges,
 # which might be a bad idea
 nekotools server -rewrite
