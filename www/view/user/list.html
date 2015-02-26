@@ -10,7 +10,7 @@
 	<tbody>
 		@for (u in list) {
 			<tr>
-				<td><img src="//www.gravatar.com/avatar/@(u.emailHash).jpg?s=150" width="48" height="48" alt="Avatar of @u.user.name" /></td>
+				<td><img src="//www.gravatar.com/avatar/@(u.emailHash).jpg?s=150" class="img-circle" width="48" height="48" alt="Avatar of @u.user.name" /></td>
 				<th><a href="/u/@u.user.name/">@u.user.name</a></th>
 				<td>@u.user.fullname</td>
 				<td>
