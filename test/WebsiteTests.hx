@@ -31,6 +31,7 @@ class WebsiteTests {
 			// Different injections for our test suite.
 			ufApp.inject( UFMailer, TestMailer, true );
 			ufApp.inject( EasyAuth, new EasyAuthAdminMode() );
+			ufApp.inject( String, "server/documentation-files/", "documentationPath" );
 		}
 		return ufApp;
 	}

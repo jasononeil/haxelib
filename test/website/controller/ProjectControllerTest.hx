@@ -1,9 +1,13 @@
 package website.controller;
 
+import haxe.io.Bytes;
+import website.api.ProjectApi;
 import website.controller.*;
 import ufront.web.result.*;
 import ufront.web.result.ViewResult;
 import website.Server;
+import haxe.ds.Option;
+using tink.CoreApi;
 
 // These imports are common for our various test-suite tools.
 import buddy.*;
@@ -18,6 +22,21 @@ class ProjectControllerTest extends BuddySuite {
 	public function new() {
 
 		var haxelibSite = WebsiteTests.getTestApp();
+		var mockApi = mock( ProjectApi );
+		haxelibSite.inject( ProjectApi, mockApi );
+		mockApi.projectInfo(cast anyString).returns( Success({
+			name: "detox",
+			desc: "Detox Description",
+			website: "https://github.com/jasononeil/detox",
+			owner: "jason",
+			license: "MIT",
+			curversion: "1.0.0-rc.8",
+			versions: [],
+			tags: new List(),
+		}) );
+		mockApi.readContentFromZip(cast anyString, cast anyString, cast anyString).returns( Success(Some("content")) );
+		mockApi.readBytesFromZip(cast anyString, cast anyString, cast anyString).returns( Success(Some(Bytes.ofString(""))) );
+		mockApi.getInfoForPath(cast anyString, cast anyString, cast anyString).returns( Success(Binary(12)) );
 
 		describe("When I view a project", {
 			it("Should show the project view for the latest version", function (done) {
@@ -79,6 +98,18 @@ class ProjectControllerTest extends BuddySuite {
 				whenILoadAProjectVersion.itShouldReturn( ViewResult, function(result) {
 					// TODO: add appropriate tests here...
 				}).andFinishWith( done );
+			});
+		});
+
+		describe("When I view a prject's versions", {
+			it("Should show me a list of all the versions of that project, with the ability to show stable releases only.", function(done) {
+				whenIVisit( "/p/detox/versions" )
+					.onTheApp( haxelibSite )
+					.itShouldLoad( ProjectController, "versionList", ["detox"] )
+					.itShouldReturn( ViewResult, function (result) {
+						// TODO: Check it shows the list of versions.
+					})
+					.andFinishWith( done );
 			});
 		});
 

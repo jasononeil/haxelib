@@ -21,7 +21,7 @@ class RSSController extends Controller {
 		return new ContentResult( content, "text/xml" );
 	}
 
-	function buildRss( releases:List<Pair<Version,Project>> ):Xml {
+	function buildRss( releases:Array<{v:Version, p:Project}> ):Xml {
 		// Helpers for building the XML
 		var createChild = function(root:Xml, name:String){
 			var c = Xml.createElement( name );
@@ -61,8 +61,8 @@ class RSSController extends Controller {
 
 		// Create the various RSS entries.
 		for ( release in releases ) {
-			var version = release.a;
-			var project = release.b;
+			var version = release.v;
+			var project = release.p;
 			var item = createChild(channel, "item");
 			var title = '${project.name} ${version.toSemver()}';
 			var description = '<p>${version.comments.htmlEscape()}</p><hr/><p>${project.description.htmlEscape()}</p>';

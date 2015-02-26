@@ -1,5 +1,6 @@
 package website;
 
+import tools.haxelib.SiteDb;
 import ufront.app.UfrontApplication;
 import ufront.view.TemplatingEngines;
 import website.controller.*;
@@ -18,22 +19,25 @@ class Server {
 			logFile: "logs/haxelib.log",
 			contentDirectory: "../uf-content/"
 		});
+		ufApp.inject( String, neko.Web.getCwd()+"documentation-files/", "documentationPath" );
 
 		var smtpMailer = null; // new SMTPMailer(Config.server.smtp);
 		var dbMailer = new DBMailer( smtpMailer );
 		ufApp.inject( UFMailer, dbMailer );
 
-		// Execute the main request.
-		run();
 
 		// If we're on neko, and using the module cache, next time jump straight to the main request.
 		#if (neko && !debug)
 			neko.Web.cacheModule(run);
 		#end
+
+		// Execute the main request.
+		run();
 	}
 
 	static function run() {
-//		sys.db.Manager.cnx = Mysql.connect( Config.mysql );
+		SiteDb.init();
 		ufApp.executeRequest();
+		SiteDb.cleanup();
 	}
 }

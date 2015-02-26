@@ -27,6 +27,7 @@ class HomeControllerTest extends BuddySuite {
 		mockApi.byTag(cast anyString).returns( Success(new List()) );
 		mockApi.search(cast anyString).returns( Success(new List()) );
 		mockApi.latest(cast anyInt).returns( Success(new List()) );
+		mockApi.getTagList(cast anyInt).returns( Success(new List()) );
 
 		describe("When I go to the homepage", {
 			it("Should show our homepage view", function (done) {
@@ -37,7 +38,7 @@ class HomeControllerTest extends BuddySuite {
 					.itShouldLoad( HomeController, "homepage", [] )
 					.itShouldReturn( ViewResult, function (result) {
 						var title:String = result.data['title'];
-						(result.data['title']:String).should.be("Haxelib");
+						(result.data['title']:String).should.be("Haxelib - the Haxe package manager");
 						Assert.same( result.templateSource, FromEngine("home/homepage") );
 						Assert.same( result.layoutSource, FromEngine("layout.html") );
 						// TODO: check we have a list of popular projects
@@ -46,6 +47,20 @@ class HomeControllerTest extends BuddySuite {
 					.andFinishWith( done );
 			});
 			// TODO: it("Show me my projects if I am logged in");
+		});
+
+		describe("When I load the tags page", {
+			it("Should show me a list of the most popular tags, sorted by popularity", function (done) {
+				whenIVisit( "/t/")
+					.onTheApp( haxelibSite )
+					.itShouldLoad( HomeController, "tagList", [] )
+					.itShouldReturn( ViewResult, function(result) {
+						Assert.same( result.templateSource, FromEngine("home/tagList") );
+						Assert.same( result.layoutSource, FromEngine("layout.html") );
+						// TODO: check that the tags are listed...
+					})
+					.andFinishWith( done );
+			});
 		});
 
 		describe("When I load a tag page", {

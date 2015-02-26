@@ -3,7 +3,9 @@
 -lib ufront:1.0.0-rc.13
 -lib ufront-mail:1.0.0-rc.4
 -lib erazor:1.0.0-rc.1
+-lib markdown:1.0.0
 -D server
+-D getter_support
 -main website.Server
 -neko server/index.n
 
@@ -14,12 +16,14 @@
 -lib ufront:1.0.0-rc.13
 -lib ufront-mail:1.0.0-rc.4
 -lib erazor:1.0.0-rc.1
+-lib markdown:1.0.0
 # Now the testing libs
 -lib buddy
 -lib mockatoo
 -lib utest
 --no-inline
 -D server
+-D getter_support
 -main WebsiteTests
 -neko bin/websitetest.n
 -cmd neko bin/websitetest.n
