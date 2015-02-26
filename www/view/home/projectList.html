@@ -1,0 +1,26 @@
+<h1><i class="fa @icon"></i> @title</h1>
+<p class="lead">@description</p>
+
+<table class="table table-compact table-hover">
+	<thead>
+		<tr>
+			<th>Project</th>
+			<th>Description</th>
+			<th>Version</th>
+			<th>Downloads</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (p in projects) {
+			<tr>
+				<th>
+					<a href="/p/@p.name/">@p.name</a>
+					<br/><small>(By {owner})</small>
+				</th>
+				<td>@p.description</td>
+				<td>{version}</td>
+				<td>@p.downloads</td>
+			</tr>
+		}
+	</tbody>
+</table>

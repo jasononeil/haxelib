@@ -24,14 +24,14 @@ class WebsiteTests {
 				disableBrowserTrace: true,
 				contentDirectory: "../uf-content/",
 				templatingEngines: [TemplatingEngines.erazor],
-				viewPath: "server/view/",
+				viewPath: "www/view/",
 				defaultLayout: "layout.html",
 			});
 
 			// Different injections for our test suite.
 			ufApp.inject( UFMailer, TestMailer, true );
 			ufApp.inject( EasyAuth, new EasyAuthAdminMode() );
-			ufApp.inject( String, "server/documentation-files/", "documentationPath" );
+			ufApp.inject( String, "www/documentation-files/", "documentationPath" );
 		}
 		return ufApp;
 	}

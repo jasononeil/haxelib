@@ -21,7 +21,7 @@ Folders:
 
 * __/src/__: Source code for the haxelib tool and the website, including legacy versions.
 * __/bin/__: The compile target for building the haxelib tool, legacy tool, and site preparation tool.
-* __/server/__: The compile target (and supporting files) for the haxelib website (including legacy site and API)
+* __/www/__: The compile target (and supporting files) for the haxelib website (including legacy site and API)
 * __/test/__: Unit test source code for running on Travis.
 * __/testing/__: A setup for manually testing a complete setup.
 * __/package/__: Files that are used for bundling the haxelib_client zip file.

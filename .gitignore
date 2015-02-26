@@ -2,14 +2,16 @@
 *.exe
 *.n
 *.zip
-server
 package
 test/libraries/*.zip
 dump/
+deploy/
 
 # Runtime files
 *.tmp
 *.db
+www/dbconfig.json
+www/.htaccess
 
 # IDE files
 .idea

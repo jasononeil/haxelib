@@ -120,7 +120,11 @@ class ProjectApi extends UFApi {
 	**/
 	public function getZipFilePath( project:String, version:String ):String {
 		var version = version.replace(".",",");
-		return 'files/3.0/$project-$version.zip';
+		#if deploy
+			return '../www/files/3.0/$project-$version.zip';
+		#else
+			return 'files/3.0/$project-$version.zip';
+		#end
 	}
 
 	//

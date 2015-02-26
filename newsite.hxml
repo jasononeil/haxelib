@@ -7,7 +7,7 @@
 -D server
 -D getter_support
 -main website.Server
--neko server/index.n
+-neko www/index.n
 
 --next
 
@@ -31,7 +31,7 @@
 --next 
 
 -cp src 
--neko server/api/3.0/index.n
+-neko www/api/3.0/index.n
 -main tools.haxelib.Repo
 -dce no
 -D haxelib_api
