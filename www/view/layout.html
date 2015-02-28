@@ -86,24 +86,26 @@
 						</ul>
 					</li>
 				</ul>
-				<form class="navbar-form navbar-right visible-lg" role="search">
+				<form action="/search/" method="GET" class="navbar-form navbar-right visible-lg" role="search">
 
-					<div class="search">
-						<div id="cse-search-form" style="width: 100%;"></div>
-						<script src="http://www.google.com/jsapi" type="text/javascript"></script>
-						<script type="text/javascript">
-							google.load('search', '1', {language : 'en', style : google.loader.themes.V2_DEFAULT});
-							google.setOnLoadCallback(function() {
-								var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-								'008143996983163686627:ohovhuovssi', customSearchOptions);
-								customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-								var options = new google.search.DrawOptions();
-								options.setAutoComplete(true);
-								customSearchControl.setAutoCompletionId('008143996983163686627:ohovhuovssi+qptype:1');
-								options.enableSearchboxOnly("/search", "s");
-								customSearchControl.draw('cse-search-form', options);
-							}, true);
-							</script>
+					<div class="form-group search">
+
+						<input type="search" class="form-control" placeholder="Search" name="v" />
+						<!--<div id="cse-search-form" style="width: 100%;"></div>-->
+						<!--<script src="http://www.google.com/jsapi" type="text/javascript"></script>-->
+						<!--<script type="text/javascript">-->
+							<!--google.load('search', '1', {language : 'en', style : google.loader.themes.V2_DEFAULT});-->
+							<!--google.setOnLoadCallback(function() {-->
+								<!--var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(-->
+								<!--'008143996983163686627:ohovhuovssi', customSearchOptions);-->
+								<!--customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);-->
+								<!--var options = new google.search.DrawOptions();-->
+								<!--options.setAutoComplete(true);-->
+								<!--customSearchControl.setAutoCompletionId('008143996983163686627:ohovhuovssi+qptype:1');-->
+								<!--options.enableSearchboxOnly("/search", "s");-->
+								<!--customSearchControl.draw('cse-search-form', options);-->
+							<!--}, true);-->
+							<!--</script>-->
 					</div>
 
 					<!--<div class="form-group">-->

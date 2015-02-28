@@ -118,6 +118,7 @@ class HomeController extends Controller {
 		else {
 			return new ViewResult({
 				title: 'Search for "${args.v}"',
+				icon: 'fa-search',
 				description: 'Haxelib projects that match the search word "${args.v}"',
 				projects: projectListApi.search( args.v ).sure()
 			}, "projectList.html");
