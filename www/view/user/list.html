@@ -18,7 +18,7 @@
 						@{i = 0;}
 						@for (p in u.projects) {
 							@{i++;}
-							<strong><a href="/p/@p.name">@p.name</a></strong> (@p.downloads)@if(i<u.projects.length){,}
+							<strong><a href="/p/@p.name">@p.name</a></strong>@if(i<u.projects.length){,}
 						}
 					</p>
 				</td>
