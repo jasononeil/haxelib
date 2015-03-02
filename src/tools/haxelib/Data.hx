@@ -48,6 +48,7 @@ typedef ProjectInfos = {
 	var owner : String;
 	var license : String;
 	var curversion : String;
+	var downloads : Int;
 	var versions : Array<VersionInfos>;
 	var tags : List<String>;
 }
