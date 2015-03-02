@@ -38,6 +38,7 @@ typedef UserInfos = {
 typedef VersionInfos = {
 	var date : String;
 	var name : String;
+	var downloads : Int;
 	var comments : String;
 }
 

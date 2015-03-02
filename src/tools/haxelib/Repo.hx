@@ -67,6 +67,7 @@ class Repo implements SiteApi {
 				[for ( v in vl ) {
 					name : v.toSemver(), 
 					comments : v.comments, 
+					downloads : v.downloads,
 					date : v.date
 				}],
 			owner : p.ownerObj.name,
