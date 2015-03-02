@@ -7,15 +7,23 @@
 	<pre><code>@exampleCode</code></pre>
 	<div class="btn-toolbar">
 		<a class="btn btn-primary" href="/documentation/using-haxelib/">Using Haxelib</a>
-		<a class="btn btn-default" href="/t/"><i class="fa fa-tag"></i> Browse By Tag</a>
+		<a class="btn btn-default" href="/t/"><i class="fa fa-tags"></i> Browse By Tag</a>
 		<a class="btn btn-default" href="/u/"><i class="fa fa-user"></i> Browse By User</a>
 		<a class="btn btn-default" href="/all/"><i class="fa fa-star"></i> View All Haxelibs</a>
 		<a class="btn btn-default" href="/documentation/creating-a-haxelib-package/">Creating a Haxelib Package</a>
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-6">
-		<h4>Featured Project</h4>
+	<div class="col-md-3">
+		<h4><i class="fa fa-tags"></i> Popular Tags</h4>
+		<ul class="list-unstyled">
+			@for( t in tags ) {
+				<li><i class="fa fa-tag"></i> <a href="/t/@t.tag/"><strong>@t.tag</strong> <span class="badge">@t.count</span></a></li>
+			}
+		</ul>
+	</div>
+	<div class="col-md-5">
+		<h4><i class="fa fa-star"></i> Featured Project</h4>
 		<h5><a href="/p/munit/">munit</a></h5>
 		<p class="lead">MassiveUnit, or munit, is a full featured unit testing framework by Massive Interactive.</p>
 		<p>With support for AS3, JS, Neko and CPP, automatic test importers, support for ignoring tests, asynchronous tests and more, it's a great library.</p>
@@ -24,16 +32,9 @@
 			<a class="btn btn-primary" href="/p/munit/">View project page</a>
 			<a class="btn btn-default" href="#">View older featured projects</a>
 		</div>
-
-		<h4><i class="fa fa-tags"></i> Popular Tags</h4>
-		<ul class="list-unstyled">
-			@for( t in tags ) {
-				<li><i class="fa fa-tag"></i> <a href="/t/@t.tag/"><strong>@t.tag</strong> <span class="badge">@t.count</span></a></li>
-			}
-		</ul>
 	</div>
-	<div class="col-md-6">
-		<h4>Recently Updated</h4>
+	<div class="col-md-4">
+		<h4><i class="fa fa-paperclip"></i> Recently Updated</h4>
 		<div>
 			@for( update in latestProjects ) {
 				<p>
