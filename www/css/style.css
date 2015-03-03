@@ -692,11 +692,14 @@ html .gsc-search-box .gsc-input > input:focus, html .gsc-input-box-focus {
 }
 
 i.fa { 
-	color:#777;
+	color: #777;
 }
 h1 i.fa {
-	color:#fab20b;
+	color: #f68712;
 }
 h2 i.fa, h3 i.fa, h4 i.fa, h5 i.fa { 
-	color:#333;
+	color: #333;
+}
+.well .table {
+	margin-bottom: 0;
 }
