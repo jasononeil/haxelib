@@ -685,3 +685,21 @@ html .gsc-search-box .gsc-input > input:focus, html .gsc-input-box-focus {
 	.navbar .search-link-menu { display: block; }
 	.navbar .search { display: none; }
 }
+
+.user-profile img.avatar
+{
+	margin:0 30px 0 20px;
+}
+
+i.fa { 
+	color: #777;
+}
+h1 i.fa {
+	color: #f68712;
+}
+h2 i.fa, h3 i.fa, h4 i.fa, h5 i.fa { 
+	color: #333;
+}
+.well .table {
+	margin-bottom: 0;
+}

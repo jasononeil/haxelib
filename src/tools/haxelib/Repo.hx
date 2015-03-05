@@ -56,6 +56,9 @@ class Repo implements SiteApi {
 			throw "No such Project : "+project;
 		var vl = Version.manager.search($project == p.id);
 		
+		var sumDownloads = function(version:Version, total:Int) return total += version.downloads;
+		var totalDownloads = Lambda.fold(vl, sumDownloads, 0);
+		
 		return {
 			name : p.name,
 			curversion : if( p.versionObj == null ) null else p.versionObj.toSemver(),
@@ -64,11 +67,13 @@ class Repo implements SiteApi {
 				[for ( v in vl ) {
 					name : v.toSemver(), 
 					comments : v.comments, 
+					downloads : v.downloads,
 					date : v.date
 				}],
 			owner : p.ownerObj.name,
 			website : p.website,
 			license : p.license,
+			downloads : totalDownloads,
 			tags : Tag.manager.search($project == p.id).map(function(t) return t.tag),
 		};
 	}
