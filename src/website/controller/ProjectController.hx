@@ -112,7 +112,9 @@ class ProjectController extends Controller {
 				data["size"] = (size/1024).roundTo(1) + "kb";
 		}
 
-		return new ViewResult( data );
+		var vr = new ViewResult( data );
+		vr.helpers["extensionAllowed"] = function(file:String) return ["md","json","hx","hxml","xml","html","txt"].has(file.extension().toLowerCase());
+		return vr;
 	}
 
 	// TODO: write some tests...

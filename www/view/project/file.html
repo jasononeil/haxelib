@@ -40,7 +40,7 @@
 
 		<div class="list-group">
 			@for (dir in dirListing) { <a href="@currentDir/@dir/" class="list-group-item"><i class="fa fa-folder"></i> @dir/</a> }
-			@for (file in fileListing) { <a href="@currentDir/@file" class="list-group-item"><i class="fa fa-file"></i> @file</a> }
+			@for (file in fileListing) { <a href="@currentDir/@file" class="list-group-item" @if(extensionAllowed(file)==false) { rel="nofollow"}><i class="fa fa-file"></i> @file</a> }
 		</div>
 	}
 	else if ( type=="text" ) {
@@ -67,4 +67,3 @@
 		</div>
 	}
 </div>
-
