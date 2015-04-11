@@ -31,7 +31,12 @@ class ProjectApi extends UFApi {
 			var info = new Repo().infos(projectName);
 			return Success( info );
 		}
-		catch ( e:Dynamic ) return Failure( Error.withData("Failed to get info for project $projectName",e) );
+		catch ( e:Dynamic )  {
+			var error =
+				if ( Std.is(e,String) && StringTools.startsWith(e,"No such Project") ) HttpError.pageNotFound();
+				else Error.withData('Failed to get info for project $projectName',e);
+			return Failure( error );
+		}
 	}
 
 	/**

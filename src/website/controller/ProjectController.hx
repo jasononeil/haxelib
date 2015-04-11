@@ -10,6 +10,7 @@ using tink.CoreApi;
 using haxe.io.Path;
 using CleverSort;
 using thx.core.Floats;
+using Lambda;
 
 class ProjectController extends Controller {
 
@@ -37,8 +38,12 @@ class ProjectController extends Controller {
 	@:route("/$projectName/$semver")
 	public function version( projectName:String, ?semver:String ) {
 		var info = projectApi.projectInfo( projectName ).sure();
-		if ( semver==null )
+		if ( semver==null ) {
 			semver = info.curversion;
+		}
+		else if ( !info.versions.exists(function(v) return v.name==semver) ) {
+			throw HttpError.pageNotFound();
+		}
 
 		var downloadUrl = '/' + projectApi.getZipFilePath( projectName, semver );
 
