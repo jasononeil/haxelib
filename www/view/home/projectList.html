@@ -15,10 +15,10 @@
 			<tr>
 				<th>
 					<a href="/p/@p.name/">@p.name</a>
-					<br/><small>(By {owner})</small>
+					<br/><small>(By <a href="/u/@authors.get(p.name)/">@authors.get(p.name)</a>)</small>
 				</th>
 				<td>@p.description</td>
-				<td>{version}</td>
+				<td>@versions.get(p.name)</td>
 				<td>@p.downloads</td>
 			</tr>
 		}

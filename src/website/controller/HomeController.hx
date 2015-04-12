@@ -89,11 +89,16 @@ class HomeController extends Controller {
 			return tagJson( tagName.substr(0,tagName.length-5) );
 		}
 		else {
+			var list = projectListApi.byTag( tagName ).sure();
+			var versions = [for (p in list) p.name => p.versionObj.toSemver()];
+			var authors = [for (p in list) p.name => p.ownerObj.name];
 			return new ViewResult({
 				title: 'Tag: $tagName',
 				icon: 'fa-tag',
 				description: 'A list of all projects on Haxelib with the tag "$tagName"',
-				projects: projectListApi.byTag( tagName ).sure(),
+				projects: list,
+				versions: versions,
+				authors: authors,
 			}, "projectList.html");
 		}
 	}
@@ -101,11 +106,15 @@ class HomeController extends Controller {
 	@:route("/all")
 	public function all() {
 		var list = projectListApi.all().sure();
+		var versions = [for (p in list) p.name => p.versionObj.toSemver()];
+		var authors = [for (p in list) p.name => p.ownerObj.name];
 		return new ViewResult({
 			title: 'All Haxelibs',
 			icon: 'fa-star',
 			description: 'A list of every project uploaded on haxelib, sorted by popularity',
 			projects: list,
+			versions: versions,
+			authors: authors,
 		}, "projectList.html");
 	}
 
@@ -117,11 +126,16 @@ class HomeController extends Controller {
 			}, "searchForm.html");
 		}
 		else {
+			var list = projectListApi.search( args.v ).sure();
+			var versions = [for (p in list) p.name => p.versionObj.toSemver()];
+			var authors = [for (p in list) p.name => p.ownerObj.name];
 			return new ViewResult({
 				title: 'Search for "${args.v}"',
 				icon: 'fa-search',
 				description: 'Haxelib projects that match the search word "${args.v}"',
-				projects: projectListApi.search( args.v ).sure()
+				projects: list,
+				versions: versions,
+				authors: authors,
 			}, "projectList.html");
 		}
 	}
