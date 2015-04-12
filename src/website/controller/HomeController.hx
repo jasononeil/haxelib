@@ -2,6 +2,7 @@ package website.controller;
 
 import ufront.web.Controller;
 import ufront.web.result.*;
+import ufront.ufadmin.controller.*;
 import website.api.ProjectListApi;
 import website.model.SiteDb;
 using thx.core.Arrays;
@@ -132,6 +133,11 @@ class HomeController extends Controller {
 	@:route("/all.json")
 	public function allJson()
 		return new JsonResult( projectListApi.all().sure() );
+
+	@:route("/ufadmin/*")
+	public function ufadmin() {
+		return executeSubController( UFAdminHomeController );
+	}
 
 	public function tagJson( tagName:String )
 		return new JsonResult( projectListApi.byTag(tagName).sure() );
