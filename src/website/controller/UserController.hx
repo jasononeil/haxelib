@@ -6,6 +6,7 @@ import ufront.web.result.*;
 import website.api.UserApi;
 using tink.CoreApi;
 
+@cacheRequest
 class UserController extends Controller {
 
 	@inject public var api:UserApi;

@@ -5,6 +5,7 @@ import ufront.web.result.*;
 import website.api.DocumentationApi;
 using tink.CoreApi;
 
+@cacheRequest
 class DocumentationController extends Controller {
 
 	@inject public var api:DocumentationApi;

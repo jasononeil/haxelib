@@ -6,6 +6,7 @@ import haxe.zip.Reader;
 import tools.haxelib.Repo;
 import tools.haxelib.Data;
 import ufront.api.UFApi;
+import ufront.cache.UFCache;
 import ufront.web.HttpError;
 import website.model.SiteDb;
 import haxe.ds.Option;
@@ -17,10 +18,11 @@ class ProjectApi extends UFApi {
 
 	// TODO: inject the repo directory instead.
 	@inject("scriptDirectory") public var scriptDir:String;
+	@inject public var cacheCnx:UFCacheConnectionSync;
 
 	/** Extensions that should be loaded as a text file. **/
-	public var textExtensions:Array<String> = ["md","txt","hx","hxml","json","xml","htaccess"];
-	public var imgExtensions:Array<String> = ["jpg","jpeg","gif","png"];
+	public static var textExtensions:Array<String> = ["md","txt","hx","hxml","json","xml","htaccess"];
+	public static var imgExtensions:Array<String> = ["jpg","jpeg","gif","png"];
 
 	/**
 		Load the ProjectInfos for the given project.

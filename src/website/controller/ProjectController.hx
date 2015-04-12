@@ -12,6 +12,7 @@ using CleverSort;
 using thx.core.Floats;
 using Lambda;
 
+@cacheRequest
 class ProjectController extends Controller {
 
 	@inject public var projectApi:ProjectApi;
@@ -113,7 +114,7 @@ class ProjectController extends Controller {
 		}
 
 		var vr = new ViewResult( data );
-		vr.helpers["extensionAllowed"] = function(file:String) return ["md","json","hx","hxml","xml","html","txt"].has(file.extension().toLowerCase());
+		vr.helpers["extensionAllowed"] = function(file:String) return ProjectApi.textExtensions.has(file.extension().toLowerCase());
 		return vr;
 	}
 

@@ -10,6 +10,7 @@ using StringTools;
 using tink.CoreApi;
 using CleverSort;
 
+@cacheRequest
 class HomeController extends Controller {
 
 	@inject public var projectListApi:ProjectListApi;
@@ -32,7 +33,6 @@ class HomeController extends Controller {
 	public function homepage() {
 		var latestProjects = projectListApi.latest( 10 ).sure();
 		var tags = projectListApi.getTagList( 10 ).sure();
-		// "Welcome, old site, Latest Releases, Browse projects";
 		return new ViewResult({
 			title: "Haxelib - the Haxe package manager",
 			description: "Haxelib is a tool that enables sharing libraries and code in the Haxe ecosystem.",
