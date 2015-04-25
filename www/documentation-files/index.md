@@ -1,4 +1,4 @@
-# About Haxelib
+# Getting Started With Haxelib
 
 Haxelib is the library manager that comes with any Haxe distribution. Connected to a central repository, it allows submitting and retrieving libraries and has multiple features beyond that. Available libraries can be found at <http://lib.haxe.org>.
 

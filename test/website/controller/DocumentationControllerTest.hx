@@ -10,6 +10,7 @@ import buddy.*;
 import mockatoo.Mockatoo.*;
 import ufront.test.TestUtils.NaturalLanguageTests.*;
 import utest.Assert;
+using haxe.io.Path;
 using buddy.Should;
 using ufront.test.TestUtils;
 using mockatoo.Mockatoo;
@@ -21,13 +22,13 @@ class DocumentationControllerTest extends BuddySuite {
 
 		describe("When viewing documentation", {
 			it("Should load all pages without errors", function (done) {
-				var pages = DocumentationController.documentationPages;
+				var pages = DocumentationController.getDocumentationPages();
 				var allResults = [];
 				for ( url in pages.keys() ) {
-					var title = pages[url];
+					var title = pages.get( url );
 					var page =
-						if ( url=="/documentation" ) null
-						else url.substr( "/documentation/".length );
+						if ( url=="/documentation/" ) null
+						else url.substr( "/documentation/".length ).removeTrailingSlashes();
 					var result = whenIVisit( url )
 						.onTheApp( haxelibSite )
 						.itShouldLoad( DocumentationController, "documentationPage", [page] )

@@ -26,7 +26,9 @@ class HomeController extends Controller {
 			url += '?'+r.queryString;
 		}
 		ViewResult.globalValues.set( "pageUrl", url );
+		ViewResult.globalValues.set( "currentPage", r.uri );
 		ViewResult.globalValues.set( "todaysDate", Date.now() );
+		ViewResult.globalValues.set( "documentationPages", DocumentationController.getDocumentationPages() );
 		ViewResult.globalValues.set( "description", "Haxe is an open source toolkit based on a modern, high level, strictly typed programming language." );
 	}
 
