@@ -31,7 +31,7 @@ class ProjectControllerTest extends BuddySuite {
 			owner: "jason",
 			license: "MIT",
 			curversion: "1.0.0-rc.8",
-			versions: [],
+			versions: [{ date: Date.now(), name:"1.0.0-rc.8", downloads:150, comments:"Breaking changes everywhere." }],
 			tags: new List(),
 		}) );
 		mockApi.readContentFromZip(cast anyString, cast anyString, cast anyString).returns( Success(Some("content")) );
@@ -55,10 +55,10 @@ class ProjectControllerTest extends BuddySuite {
 
 		describe("When I view a project version", {
 
-			var whenILoadAProjectVersion = whenIVisit( "/p/detox/1.0.0-rc.1/" ).onTheApp( haxelibSite );
+			var whenILoadAProjectVersion = whenIVisit( "/p/detox/1.0.0-rc.8/" ).onTheApp( haxelibSite );
 			it("Should load the correct layout / view", function (done) {
 				whenILoadAProjectVersion
-				.itShouldLoad( ProjectController, "version", ["detox","1.0.0-rc.1"] )
+				.itShouldLoad( ProjectController, "version", ["detox","1.0.0-rc.8"] )
 				.itShouldReturn( ViewResult, function(result) {
 					Assert.same( FromEngine("project/version.html"), result.templateSource );
 					Assert.same( FromEngine("layout.html"), result.layoutSource );
