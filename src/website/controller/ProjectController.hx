@@ -9,7 +9,7 @@ import ufront.view.TemplateData;
 using tink.CoreApi;
 using haxe.io.Path;
 using CleverSort;
-using thx.core.Floats;
+using thx.Floats;
 using Lambda;
 
 @cacheRequest

@@ -28,11 +28,22 @@
 -neko bin/websitetest.n
 -cmd neko bin/websitetest.n
 
---next 
+--next
 
--cp src 
+-cp src
+-cp test
+-lib ufront
+-lib ufront-mail
+-lib erazor
+-lib markdown
+-D server
+-main website.Tasks
+-neko www/tasks.n
+
+--next
+
+-cp src
 -neko www/api/3.0/index.n
 -main tools.haxelib.Repo
 -dce no
 -D haxelib_api
-

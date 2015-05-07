@@ -23,7 +23,7 @@ class ProjectControllerTest extends BuddySuite {
 
 		var haxelibSite = WebsiteTests.getTestApp();
 		var mockApi = mock( ProjectApi );
-		haxelibSite.inject( ProjectApi, mockApi );
+		haxelibSite.injectValue( ProjectApi, mockApi );
 		mockApi.projectInfo(cast anyString).returns( Success({
 			name: "detox",
 			desc: "Detox Description",
