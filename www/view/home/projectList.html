@@ -1,7 +1,7 @@
 <h1><i class="fa @icon"></i> @title</h1>
 <p class="lead">@description</p>
 
-<table class="table table-compact table-hover">
+<table class="table table-compact table-hover project-list">
 	<thead>
 		<tr>
 			<th>Project</th>
@@ -15,7 +15,7 @@
 			<tr>
 				<th>
 					<a href="/p/@p.name/">@p.name</a>
-					<br/><small>(By <a href="/u/@authors.get(p.name)/">@authors.get(p.name)</a>)</small>
+					<br/><small><a href="/u/@authors.get(p.name)/">@@@authors.get(p.name)</a></small>
 				</th>
 				<td>@p.description</td>
 				<td>@versions.get(p.name)</td>
