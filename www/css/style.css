@@ -156,10 +156,6 @@ a.anch {
 .homepage .section blockquote {
 	padding: 10px 20px;
 }
-.section blockquote p {
-	font-size: 18px;
-	font-style: italic;
-}
 @media (min-width: 979px) {
 	.homepage .section blockquote {
 		margin: 100px 20px 100px 20px;
