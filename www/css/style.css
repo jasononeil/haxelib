@@ -705,6 +705,10 @@ h2 i.fa, h3 i.fa, h4 i.fa, h5 i.fa {
 /** File browser **/
 .panel-heading .breadcrumb {
 	margin: 0;
+	padding-left: 0;
+}
+.breadcrumb > li:first-child {
+	padding-left: 0;
 }
 pre.panel-body {
 	margin: 0;

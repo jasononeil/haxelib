@@ -23,6 +23,10 @@
 				var i = 0;
 				var breadcrumbBase = baseUri+project+"/"+version+"/files";
 			}
+			<li>
+				@if ( type=="directory" ) { <i class="fa fa-folder"></i> }
+				else if ( type=="text" ) { <i class="fa fa-file"></i> }
+			</li>
 			<li><a href="@breadcrumbBase">@project : @version</a></li>
 			@while(i < fileParts.length) {
 				@if (i+1<fileParts.length){
