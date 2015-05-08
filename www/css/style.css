@@ -718,3 +718,24 @@ pre.panel-body {
 	border: none;
 	background: white;
 }
+/** Project lists. **/
+.project-list small {
+	font-weight: normal;
+}
+/** Homepage Banner **/
+.section.homepage-banner {
+	background: url('/img/homepage_banner.jpg');
+	background-size: cover;
+	color: white;
+}
+.section.homepage-banner .jumbotron {
+	background: rgba(0,0,0,0.3);
+}
+.section.homepage-banner .jumbotron pre {
+	background: rgba(0,0,0,0.6);
+	margin: 0 0 20px 0;
+	padding: 10px;
+}
+.section.homepage-banner .jumbotron pre code {
+	color: white;
+}

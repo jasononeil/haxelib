@@ -131,11 +131,16 @@
 </div>
 
 <div class="page-wrap">
-	<div class="section">
-		<div class="container">
-			@viewContent
+	@if( useWrapper ) {
+		<div class="section">
+			<div class="container">
+				@viewContent
+			</div>
 		</div>
-	</div>
+	}
+	else {
+		@viewContent
+	}
 </div>
 
 <footer class="section dark site-footer">
