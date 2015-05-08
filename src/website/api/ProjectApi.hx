@@ -16,6 +16,12 @@ using haxe.io.Path;
 
 class ProjectApi extends UFApi {
 
+	static var cacheNames = {
+		info: 'haxelib_zip_cache_info',
+		dirListing: 'haxelib_zip_cache_dir_list',
+		fileBytes: 'haxelib_zip_cache_file_content'
+	};
+
 	// TODO: inject the repo directory instead.
 	@inject("scriptDirectory") public var scriptDir:String;
 	@inject public var cacheCnx:UFCacheConnectionSync;
@@ -43,49 +49,61 @@ class ProjectApi extends UFApi {
 
 	/**
 		Given a path, load either the file or the directory listing, and take a guess at the content type.
+
+		This will use `this.cacheCnx` to cache results, to prevent us having to load the zip file each time.
 	**/
 	public function getInfoForPath( projectName:String, version:String, path:String ):Outcome<FileInformation,Error> {
 		try {
 			var pathWithSlash = path.addTrailingSlash();
-			var extension = path.extension();
-			var zip = getZipEntries(projectName,version);
-			var fileInfo:FileInformation = null;
-			for ( entry in zip ) {
-				if ( entry.fileName==path ) {
-					// Exact match! It's a file, not a directory. Now, check the type and load it.
-					fileInfo =
-						if ( textExtensions.indexOf(extension)>-1 )
-							Text( Reader.unzip(entry).toString(), extension );
-						else if ( imgExtensions.indexOf(extension)>-1 )
-							Image( Reader.unzip(entry), extension );
-						else
-							Binary( entry.fileSize );
-					break;
+			var cache = cacheCnx.getNamespaceSync( cacheNames.info );
+			var fileInfo = cache.getOrSetSync( '$projectName:$version:$pathWithSlash', function() {
+				var extension = path.extension();
+				var zip = getZipEntries(projectName,version);
+				var fileInfo = null;
+				for ( entry in zip ) {
+					if ( entry.fileName==path ) {
+						// Exact match! It's a file, not a directory. Now, check the type and load it.
+						fileInfo =
+							if ( textExtensions.indexOf(extension)>-1 )
+								Text( Reader.unzip(entry).toString(), extension );
+							else if ( imgExtensions.indexOf(extension)>-1 )
+								Image( Reader.unzip(entry), extension );
+							else
+								Binary( entry.fileSize );
+						break;
+					}
+					else if ( entry.fileName==pathWithSlash || pathWithSlash=="/" ) {
+						// It's a directory, so get the listing of files and sub directories.
+						var dirListing = getDirListing( zip, path );
+						fileInfo = Directory( dirListing.dirs, dirListing.files );
+						break;
+					}
 				}
-				else if ( entry.fileName==pathWithSlash || pathWithSlash=="/" ) {
-					// It's a directory, so get the listing of files and sub directories.
-					var dirListing = getDirListing( zip, path );
-					fileInfo = Directory( dirListing.dirs, dirListing.files );
-					break;
-				}
-			}
+				return fileInfo;
+			}).sure();
 			return
 				if ( fileInfo!=null ) Success( fileInfo );
 				else Failure( HttpError.pageNotFound() );
 		}
-		catch ( e:Dynamic ) return Failure( Error.withData("Failed to get file information for $path in $projectName ($version)",e) );
+		catch ( e:Dynamic ) return Failure( Error.withData('Failed to get file information for $path in $projectName ($version)',e) );
 	}
 
 	/**
 		Fetch a list of files in a directory in the zip file.
+
+		This will use `this.cacheCnx` to cache results, to prevent us having to load the zip file each time.
+
 		Returns a Success with two arrays, containing a) sub directories, and b) files. Names are relative to the dirPath, not absolute to the zip.
 		Returns a Failure with an error if one is encountered.
 	**/
 	public function getDirListingFromZip( projectName:String, version:String, dirPath:String ):Outcome<{ dirs:Array<String>, files:Array<String> },Error> {
 		try {
-			// TODO: Support some caching, so we don't have to unzip this on every page load.
-			var zip = getZipEntries(projectName,version);
-			return Success( getDirListing(zip,dirPath) );
+			var cache = cacheCnx.getNamespaceSync( cacheNames.dirListing );
+			var listing = cache.getOrSetSync( '$projectName:$version:$dirPath', function() {
+				var zip = getZipEntries(projectName,version);
+				return getDirListing(zip,dirPath);
+			}).sure();
+			return Success( listing );
 		}
 		catch ( e:Dynamic ) return Failure( Error.withData('Failed to read directory $dirPath from $projectName ($version) zip',e) );
 	}
@@ -112,9 +130,11 @@ class ProjectApi extends UFApi {
 	**/
 	public function readBytesFromZip( projectName:String, version:String, filename:String, ?caseSensitive:Bool=true ):Outcome<Option<Bytes>,Error> {
 		try {
-			// TODO: Allow only a set number of extensions that we know to be text files.  hx, hxml, html, json, xml, tpl, mtt etc.
-			var zip = getZipEntries( projectName, version );
-			var bytes = getBytesFromFile( zip, filename, caseSensitive );
+			var cache = cacheCnx.getNamespaceSync( cacheNames.fileBytes );
+			var bytes = cache.getOrSetSync( '$projectName:$version:$filename:$caseSensitive', function() {
+				var zip = getZipEntries( projectName, version );
+				return getBytesFromFile( zip, filename, caseSensitive );
+			}).sure();
 			return
 				if ( bytes!=null ) Success( Some(bytes) );
 				else Success( None );
@@ -128,6 +148,8 @@ class ProjectApi extends UFApi {
 	public function getZipFilePath( project:String, version:String ):String {
 		var version = version.replace(".",",");
 		#if deploy
+			// On the haxe.org server, we want to access the repo from the old website.
+			// When we change the websites over we should probably move these over too.
 			return '../www/files/3.0/$project-$version.zip';
 		#else
 			return 'files/3.0/$project-$version.zip';

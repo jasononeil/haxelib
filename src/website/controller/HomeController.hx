@@ -15,7 +15,6 @@ using CleverSort;
 class HomeController extends Controller {
 
 	@inject public var projectListApi:ProjectListApi;
-	@inject("scriptDirectory") public var scriptDir:String;
 
 	// Perform init() after dependency injection has occured.
 	@post public function init() {
