@@ -12,7 +12,6 @@ using CleverSort;
 using thx.Floats;
 using Lambda;
 
-@cacheRequest
 class ProjectController extends Controller {
 
 	@inject public var projectApi:ProjectApi;
@@ -65,6 +64,7 @@ class ProjectController extends Controller {
 		}, "version.html");
 	}
 
+	@cacheRequest
 	@:route("/$projectName/$semver/doc/$typePath")
 	public function docs( projectName:String, semver:String, ?typePath:String ) {
 		return new ViewResult({
@@ -72,6 +72,7 @@ class ProjectController extends Controller {
 		});
 	}
 
+	@cacheRequest
 	@:route("/$projectName/$semver/files/*")
 	public function file( projectName:String, semver:String, rest:Array<String> ) {
 		var filePath = rest.join("/");

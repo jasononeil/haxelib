@@ -7,9 +7,8 @@ import ufront.tasks.UFTaskSet;
 import ufront.auth.*;
 import ufront.auth.tasks.EasyAuthTasks;
 import ufront.auth.EasyAuth;
-import ufront.cache.DBCache;
 import ufront.web.session.*;
-import tasks.*;
+import website.tasks.*;
 using ufront.core.InjectionTools;
 
 class Tasks extends UFTaskSet
@@ -53,6 +52,6 @@ class Tasks extends UFTaskSet
 		@alias c
 	**/
 	public function cache( d:Dispatch ) {
-		executeSubTasks( d, DBCacheTasks );
+		executeSubTasks( d, HaxelibCacheTasks );
 	}
 }

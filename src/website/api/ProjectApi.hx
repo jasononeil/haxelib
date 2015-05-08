@@ -16,7 +16,7 @@ using haxe.io.Path;
 
 class ProjectApi extends UFApi {
 
-	static var cacheNames = {
+	public static var cacheNames = {
 		info: 'haxelib_zip_cache_info',
 		dirListing: 'haxelib_zip_cache_dir_list',
 		fileBytes: 'haxelib_zip_cache_file_content'
