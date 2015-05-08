@@ -11,7 +11,6 @@ using StringTools;
 using tink.CoreApi;
 using CleverSort;
 
-@cacheRequest
 class HomeController extends Controller {
 
 	@inject public var projectListApi:ProjectListApi;
@@ -57,6 +56,7 @@ class HomeController extends Controller {
 	@:route("/documentation/*")
 	public var documentationController:DocumentationController;
 
+	@cacheRequest
 	@:route("/t/")
 	public function tagList():ViewResult {
 		var tagList = projectListApi.getTagList( 50 ).sure();
@@ -84,6 +84,7 @@ class HomeController extends Controller {
 	}
 
 	// TODO: get ufront-mvc to support `/t/$tagName` and `/t/$tagName.json` as different routes.
+	@cacheRequest
 	@:route("/t/$tagName")
 	public function tag( tagName:String ):ActionResult {
 		if ( tagName.endsWith(".json") ) {
@@ -104,6 +105,7 @@ class HomeController extends Controller {
 		}
 	}
 
+	@cacheRequest
 	@:route("/all")
 	public function all() {
 		var list = projectListApi.all().sure();
@@ -145,6 +147,7 @@ class HomeController extends Controller {
 	public function searchJson( args:{ v:String } )
 		return new JsonResult( projectListApi.search(args.v).sure() );
 
+	@cacheRequest
 	@:route("/all.json")
 	public function allJson()
 		return new JsonResult( projectListApi.all().sure() );
