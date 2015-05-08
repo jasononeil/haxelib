@@ -9,6 +9,7 @@
 		"dbconfig.json",
 		"favicon.ico",
 		"index.n",
+		"tasks.n",
 		".htaccess"
 	],
 	"targets": [
