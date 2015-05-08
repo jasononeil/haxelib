@@ -702,3 +702,8 @@ h2 i.fa, h3 i.fa, h4 i.fa, h5 i.fa {
 .well .table {
 	margin-bottom: 0;
 }
+pre.panel-body {
+	margin: 0;
+	border: none;
+	background: white;
+}
