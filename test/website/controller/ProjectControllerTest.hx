@@ -31,7 +31,7 @@ class ProjectControllerTest extends BuddySuite {
 			owner: "jason",
 			license: "MIT",
 			curversion: "1.0.0-rc.8",
-			versions: [{ date: Date.now(), name:"1.0.0-rc.8", downloads:150, comments:"Breaking changes everywhere." }],
+			versions: [{ date: "2010-01-01 34:56:12", name:"1.0.0-rc.8", downloads:150, comments:"Breaking changes everywhere." }],
 			tags: new List(),
 		}) );
 		mockApi.readContentFromZip(cast anyString, cast anyString, cast anyString).returns( Success(Some("content")) );
@@ -101,7 +101,7 @@ class ProjectControllerTest extends BuddySuite {
 			});
 		});
 
-		describe("When I view a prject's versions", {
+		describe("When I view a project's versions", {
 			it("Should show me a list of all the versions of that project, with the ability to show stable releases only.", function(done) {
 				whenIVisit( "/p/detox/versions" )
 					.onTheApp( haxelibSite )
