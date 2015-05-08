@@ -8,6 +8,9 @@ import website.api.ProjectApi;
 class HaxelibCacheTasks extends UFTaskSet {
 	@:skip @inject public var api:DBCacheApi;
 
+	/** Set up the cache table. **/
+	public function setup():Void api.setup();
+
 	/** Clear every cached item. **/
 	public function clearAll():Void api.clearAll();
 
