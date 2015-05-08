@@ -11,6 +11,7 @@ using haxe.io.Path;
 using CleverSort;
 using thx.Floats;
 using Lambda;
+using DateTools;
 
 class ProjectController extends Controller {
 
@@ -38,12 +39,11 @@ class ProjectController extends Controller {
 	@:route("/$projectName/$semver")
 	public function version( projectName:String, ?semver:String ) {
 		var info = projectApi.projectInfo( projectName ).sure();
-		if ( semver==null ) {
+		if ( semver==null )
 			semver = info.curversion;
-		}
-		else if ( !info.versions.exists(function(v) return v.name==semver) ) {
+		var currentVersion = info.versions.find( function(v) return v.name==semver );
+		if ( currentVersion==null )
 			throw HttpError.pageNotFound();
-		}
 
 		var downloadUrl = '/' + projectApi.getZipFilePath( projectName, semver );
 
@@ -58,6 +58,7 @@ class ProjectController extends Controller {
 			project: projectName,
 			allVersions: info.versions,
 			version: semver,
+			versionDate: Date.fromString(currentVersion.date).format('%F'),
 			info: info,
 			downloadUrl: downloadUrl,
 			readme: readmeHTML,
