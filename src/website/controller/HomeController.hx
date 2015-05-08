@@ -28,6 +28,7 @@ class HomeController extends Controller {
 		ViewResult.globalValues.set( "todaysDate", Date.now() );
 		ViewResult.globalValues.set( "documentationPages", DocumentationController.getDocumentationPages() );
 		ViewResult.globalValues.set( "description", "Haxe is an open source toolkit based on a modern, high level, strictly typed programming language." );
+		ViewResult.globalValues.set( "searchTerm", context.session.get('searchTerm') );
 	}
 
 	@:route("/")
@@ -123,24 +124,28 @@ class HomeController extends Controller {
 
 	@:route("/search")
 	public function search( ?args:{ v:String } ) {
+		var result = new ViewResult();
 		if ( args.v==null || args.v.length==0 ) {
-			return new ViewResult({
-				title: "Show a search box.  For now use ?v="
-			}, "searchForm.html");
+			result.setVars({
+				title: 'Search Haxelib',
+				description: 'Search Haxelib project names and descriptions',
+				searchTerm: "",
+				projects: null
+			});
 		}
 		else {
+			context.session.set( 'searchTerm', args.v );
 			var list = projectListApi.search( args.v ).sure();
-			var versions = [for (p in list) p.name => p.versionObj.toSemver()];
-			var authors = [for (p in list) p.name => p.ownerObj.name];
-			return new ViewResult({
+			result.setVars({
 				title: 'Search for "${args.v}"',
-				icon: 'fa-search',
 				description: 'Haxelib projects that match the search word "${args.v}"',
 				projects: list,
-				versions: versions,
-				authors: authors,
-			}, "projectList.html");
+				versions: [for (p in list) p.name => p.versionObj.toSemver()],
+				authors: [for (p in list) p.name => p.ownerObj.name],
+				searchTerm: args.v,
+			});
 		}
+		return result;
 	}
 
 	@:route("/search.json")

@@ -538,6 +538,9 @@ blockquote.trivia:before {
 /**
 	Search
 **/
+.navbar-form .form-control {
+	height: auto;
+}
 .gsc-search-box input.gsc-search-button {
 	color: white;
 }
@@ -691,13 +694,13 @@ html .gsc-search-box .gsc-input > input:focus, html .gsc-input-box-focus {
 	margin:0 30px 0 20px;
 }
 
-i.fa { 
+i.fa {
 	color: #777;
 }
 h1 i.fa {
 	color: #f68712;
 }
-h2 i.fa, h3 i.fa, h4 i.fa, h5 i.fa { 
+h2 i.fa, h3 i.fa, h4 i.fa, h5 i.fa {
 	color: #333;
 }
 .well .table {

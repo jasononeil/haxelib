@@ -83,7 +83,12 @@
 
 					<div class="form-group search">
 
-						<input type="search" class="form-control" placeholder="Search" name="v" />
+						<div class="input-group">
+							<input type="text" name="v" class="form-control" placeholder="Search Haxelib for..." @if(searchTerm!=null){ value="@searchTerm" } />
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+							</span>
+						</div>
 						<!--<div id="cse-search-form" style="width: 100%;"></div>-->
 						<!--<script src="http://www.google.com/jsapi" type="text/javascript"></script>-->
 						<!--<script type="text/javascript">-->
