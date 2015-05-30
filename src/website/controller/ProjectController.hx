@@ -47,7 +47,10 @@ class ProjectController extends Controller {
 		var readmeHTML = switch projectApi.readContentFromZip( projectName, semver, "README.md" ) {
 			case Success(Some(readme)): Markdown.markdownToHtml(readme);
 			case Success(None): ""; // No README.
-			case Failure(err): err.message;
+			case Failure(err):
+				ufError( err.message );
+				ufError( err.toString() );
+				"";
 		}
 
 		return new ViewResult({

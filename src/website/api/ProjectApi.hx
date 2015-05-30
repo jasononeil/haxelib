@@ -139,7 +139,7 @@ class ProjectApi extends UFApi {
 				if ( bytes!=null ) Success( Some(bytes) );
 				else Success( None );
 		}
-		catch ( e:Dynamic ) return Failure( Error.withData('Failed to read $filename from $projectName ($version) zip',e) );
+		catch ( e:Dynamic ) return Failure( Error.withData('Failed to read $filename from $projectName ($version) zip: $e',e) );
 	}
 
 	/**
