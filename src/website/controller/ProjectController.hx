@@ -1,11 +1,8 @@
 package website.controller;
 
-import ufront.web.Controller;
-import ufront.web.result.*;
-import ufront.web.HttpError;
+import ufront.MVC;
 import website.api.ProjectApi;
 import haxe.ds.Option;
-import ufront.view.TemplateData;
 using tink.CoreApi;
 using haxe.io.Path;
 using CleverSort;
@@ -45,7 +42,7 @@ class ProjectController extends Controller {
 		if ( currentVersion==null )
 			throw HttpError.pageNotFound();
 
-		var downloadUrl = '/' + projectApi.getZipFilePath( projectName, semver );
+		var downloadUrl = '/p/$projectName/$semver/download/';
 
 		var readmeHTML = switch projectApi.readContentFromZip( projectName, semver, "README.md" ) {
 			case Success(Some(readme)): Markdown.markdownToHtml(readme);
@@ -63,6 +60,13 @@ class ProjectController extends Controller {
 			downloadUrl: downloadUrl,
 			readme: readmeHTML,
 		}, "version.html");
+	}
+
+	@:route("/$projectName/$semver/download/")
+	public function download( projectName:String, semver:String ) {
+		var zipFile = projectApi.getZipFilePath( projectName, semver );
+		// TODO: use DirectFilePathResult instead.
+		return new FilePathResult( context.request.scriptDirectory+zipFile, "application/zip", zipFile.withoutDirectory() );
 	}
 
 	@cacheRequest
