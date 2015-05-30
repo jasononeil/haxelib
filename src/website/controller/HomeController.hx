@@ -1,7 +1,6 @@
 package website.controller;
 
-import ufront.web.Controller;
-import ufront.web.result.*;
+import ufront.MVC;
 import ufront.ufadmin.controller.*;
 import website.api.ProjectListApi;
 import website.model.SiteDb;
@@ -16,9 +15,9 @@ class HomeController extends Controller {
 	@inject public var projectListApi:ProjectListApi;
 
 	// Perform init() after dependency injection has occured.
-	@post public function init() {
+	@inject public function init( ctx:HttpContext ) {
 		// All MVC actions come through HomeController (our index controller) first, so this is a good place to set global template variables.
-		var r = context.request;
+		var r = ctx.request;
 		var url = 'http://'+r.hostName+r.uri;
 		if ( r.queryString!="" ) {
 			url += '?'+r.queryString;
@@ -29,7 +28,7 @@ class HomeController extends Controller {
 		ViewResult.globalValues.set( "todaysDate", Date.now() );
 		ViewResult.globalValues.set( "documentationPages", DocumentationController.getDocumentationPages() );
 		ViewResult.globalValues.set( "description", "Haxe is an open source toolkit based on a modern, high level, strictly typed programming language." );
-		ViewResult.globalValues.set( "searchTerm", context.session.get('searchTerm') );
+		ViewResult.globalValues.set( "searchTerm", ctx.session.get('searchTerm') );
 	}
 
 	@:route("/")

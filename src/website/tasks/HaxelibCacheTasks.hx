@@ -2,7 +2,7 @@ package website.tasks;
 
 import ufront.tasks.UFTaskSet;
 import ufront.cache.DBCache;
-import ufront.middleware.RequestCacheMiddleware;
+import ufront.cache.RequestCacheMiddleware;
 import website.api.ProjectApi;
 
 class HaxelibCacheTasks extends UFTaskSet {

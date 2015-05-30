@@ -37,7 +37,7 @@ class DocumentationControllerTest extends BuddySuite {
 							Assert.same( FromEngine("layout.html"), result.layoutSource );
 							(result.data['title']:String).should.be('$title - Haxelib Documentation');
 						});
-					allResults.push( result );
+					allResults.push( result.result );
 				}
 
 				Future.ofMany( allResults ).handle( function() done() );
