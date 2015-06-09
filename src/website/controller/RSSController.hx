@@ -52,7 +52,12 @@ class RSSController extends Controller {
 		// Create the RSS document and headers.
 		var rss = Xml.createElement( "rss" );
 		rss.set( "version", "2.0" );
+		rss.set( "xmlns:atom", "http://www.w3.org/2005/Atom" );
 		var channel = createChild( rss, "channel" );
+		var link = createChild( channel, "atom:link" );
+		link.set( "href", 'http://$hostName/rss/' );
+		link.set( "rel", "self" );
+		link.set( "type", "application/rss+xml" );
 		createChildWithContent( channel, "title", 'Latest Haxelib Releases ($hostName)' );
 		createChildWithContent( channel, "link", url );
 		createChildWithContent( channel, "description", 'The latest $num haxelib releases on $hostName' );
@@ -71,7 +76,7 @@ class RSSController extends Controller {
 			createChildWithContent( item, "guid", url+"/p/"+project.name+"?v="+version.id );
 			var date = Date.fromString( version.date ).format( "%a, %e %b %Y %H:%M:%S %z" );
 			createChildWithContent( item, "pubDate", date );
-			createChildWithContent( item, "author", project.ownerObj.name );
+			createChildWithContent( item, "dc:creator", project.ownerObj.name );
 			createChildWithContent( item, "description", description );
 		}
 
