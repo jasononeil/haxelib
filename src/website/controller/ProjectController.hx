@@ -6,7 +6,6 @@ import haxe.ds.Option;
 using tink.CoreApi;
 using haxe.io.Path;
 using CleverSort;
-using thx.Floats;
 using Lambda;
 using DateTools;
 
@@ -119,7 +118,8 @@ class ProjectController extends Controller {
 				data["type"] = "img";
 			case Binary(size):
 				data["filename"] = rest[rest.length-1];
-				data["size"] = (size/1024).roundTo(1) + "kb";
+				var sizeInKb = Math.round(size/1024*10) / 10;
+				data["size"] = sizeInKb + "kb";
 		}
 
 		var vr = new ViewResult( data );

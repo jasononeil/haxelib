@@ -18,12 +18,17 @@ using buddy.Should;
 using ufront.test.TestUtils;
 using mockatoo.Mockatoo;
 
+It breaks:
+http://try.haxe.org/#079F1
+
+
+
 class ProjectControllerTest extends BuddySuite {
 	public function new() {
 
 		var haxelibSite = WebsiteTests.getTestApp();
 		var mockApi = mock( ProjectApi );
-		haxelibSite.injectValue( ProjectApi, mockApi );
+		haxelibSite.injector.map( ProjectApi ).toValue( mockApi );
 		mockApi.projectInfo(cast anyString).returns( Success({
 			name: "detox",
 			desc: "Detox Description",

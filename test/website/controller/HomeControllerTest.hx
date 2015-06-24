@@ -21,7 +21,7 @@ class HomeControllerTest extends BuddySuite {
 
 		var haxelibSite = WebsiteTests.getTestApp();
 		var mockApi = mock( ProjectListApi );
-		haxelibSite.injectValue( ProjectListApi, mockApi );
+		haxelibSite.injector.map( ProjectListApi ).toValue( mockApi );
 		mockApi.all().returns( Success(new List()) );
 		mockApi.byUser(cast anyString).returns( Success(new List()) );
 		mockApi.byTag(cast anyString).returns( Success(new List()) );

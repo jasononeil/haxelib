@@ -4,8 +4,6 @@ import ufront.MVC;
 import ufront.ufadmin.controller.*;
 import website.api.ProjectListApi;
 import website.model.SiteDb;
-using thx.Arrays;
-using thx.Floats;
 using StringTools;
 using tink.CoreApi;
 using CleverSort;
@@ -64,15 +62,21 @@ class HomeController extends Controller {
 		var tagList = projectListApi.getTagList( 50 ).sure();
 
 		// Build a tag cloud.
-		var sizes = [for (t in tagList) t.count];
-		var least = sizes.min();
-		var most = sizes.max();
-		var minSize = 10;
-		var maxSize = 140;
+		var least = null,
+		    most = null,
+		    minSize = 10,
+		    maxSize = 140;
+		for (t in tagList) {
+			if ( least==null || t.count<least )
+				least = t.count;
+			if ( most==null || t.count>most )
+				most = t.count;
+		}
 		function fontSizeForCount( count:Int ) {
-			var range = most - least;
-			var pos = (count - least) / range;
-			return pos.interpolate(minSize,maxSize);
+			var countRange = most - least;
+			var sizeRange = maxSize-minSize;
+			var pos = (count - least) / countRange;
+			return minSize + pos*sizeRange;
 		}
 		var tagCloud = [for (t in tagList) { tag:t.tag, size:fontSizeForCount(t.count) }];
 		tagCloud.cleverSort( _.tag );

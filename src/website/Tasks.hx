@@ -24,14 +24,15 @@ class Tasks extends UFTaskSet
 			var auth = new EasyAuthAdminMode();
 
 			var tasks = new Tasks();
-			tasks.injector.mapValue( UFHttpSession, new VoidSession() );
-			tasks.injector.mapValue( UFAuthHandler, auth );
-			tasks.injector.mapValue( EasyAuth, auth );
-			tasks.injector.mapValue( String, "../uf-content", "contentDirectory" );
+			tasks.injector.map( UFHttpSession ).toValue( new VoidSession() );
+			tasks.injector.map( "ufront.auth.UFAuthHandler<ufront.auth.UFAuthUser>" ).toValue( auth );
+			tasks.injector.map( EasyAuth ).toValue( auth );
+			tasks.injector.map( String, "contentDirectory" ).toValue( "../uf-content" );
 			tasks.useCLILogging( "log/twl-webapp.log" );
 
 			// Inject our APIs
-			for ( api in CompileTime.getAllClasses(UFApi) ) tasks.injector.injectClass( api );
+			for ( api in CompileTime.getAllClasses(UFApi) )
+				tasks.injector.map( api ).toClass( api );
 
 			SiteDb.init();
 			tasks.execute( Sys.args() );

@@ -29,9 +29,9 @@ class WebsiteTests {
 			});
 
 			// Different injections for our test suite.
-			ufApp.injectClass( UFMailer, TestMailer, true );
-			ufApp.injectValue( EasyAuth, new EasyAuthAdminMode() );
-			ufApp.injectValue( String, "www/documentation-files/", "documentationPath" );
+			ufApp.injector.map( UFMailer ).toSingleton( TestMailer );
+			ufApp.injector.map( EasyAuth ).toValue( new EasyAuthAdminMode() );
+			ufApp.injector.map( String, "documentationPath" ).toValue( "www/documentation-files/" );
 		}
 		return ufApp;
 	}

@@ -23,9 +23,9 @@ class Server {
 			requestMiddleware: [],
 			responseMiddleware: [],
 		});
-		ufApp.injectValue( String, neko.Web.getCwd()+"documentation-files/", "documentationPath" );
-		ufApp.injectClass( UFCacheConnectionSync, DBCacheConnection );
-		ufApp.injectClass( UFCacheConnection, DBCacheConnection );
+		ufApp.injector.map( String, "documentationPath" ).toValue( neko.Web.getCwd()+"documentation-files/" );
+		ufApp.injector.map( UFCacheConnectionSync ).toClass( DBCacheConnection );
+		ufApp.injector.map( UFCacheConnection ).toClass( DBCacheConnection );
 
 		// var cacheMiddleware = new RequestCacheMiddleware();
 		// ufApp.addRequestMiddleware( cacheMiddleware, true ).addResponseMiddleware( cacheMiddleware, true );

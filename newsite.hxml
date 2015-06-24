@@ -1,9 +1,11 @@
 # The new haxelib website (on the same 3.0 repo)
 -cp src
--lib ufront:1.0.0-rc.13
+-lib ufront
 -lib ufront-mail:1.0.0-rc.4
+-lib ufront-ufadmin
 -lib erazor:1.0.0-rc.1
 -lib markdown:1.0.0
+-lib cleversort
 -D server
 -D getter_support
 -main website.Server
@@ -13,10 +15,12 @@
 
 -cp src
 -cp test
--lib ufront:1.0.0-rc.13
+-lib ufront
 -lib ufront-mail:1.0.0-rc.4
+-lib ufront-uftasks
 -lib erazor:1.0.0-rc.1
 -lib markdown:1.0.0
+-lib cleversort
 # Now the testing libs
 -lib buddy
 -lib mockatoo
@@ -34,6 +38,7 @@
 -cp test
 -lib ufront
 -lib ufront-mail
+-lib ufront-uftasks
 -lib erazor
 -lib markdown
 -D server

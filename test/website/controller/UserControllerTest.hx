@@ -23,7 +23,7 @@ class UserControllerTest extends BuddySuite {
 
 		var haxelibSite = WebsiteTests.getTestApp();
 		var mockApi = mock( UserApi );
-		haxelibSite.injectValue( UserApi, mockApi );
+		haxelibSite.injector.map( UserApi ).toValue( mockApi );
 
 		function mockUser(user,name,email) {
 			var u = new User();
