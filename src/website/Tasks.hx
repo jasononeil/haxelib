@@ -25,14 +25,14 @@ class Tasks extends UFTaskSet
 
 			var tasks = new Tasks();
 			tasks.injector.map( UFHttpSession ).toValue( new VoidSession() );
-			tasks.injector.map( "ufront.auth.UFAuthHandler<ufront.auth.UFAuthUser>" ).toValue( auth );
+			tasks.injector.map( UFAuthHandler ).toValue( auth );
 			tasks.injector.map( EasyAuth ).toValue( auth );
 			tasks.injector.map( String, "contentDirectory" ).toValue( "../uf-content" );
 			tasks.useCLILogging( "log/twl-webapp.log" );
 
 			// Inject our APIs
 			for ( api in CompileTime.getAllClasses(UFApi) )
-				tasks.injector.map( api ).toClass( api );
+				tasks.injector.mapRuntimeTypeOf( api );
 
 			SiteDb.init();
 			tasks.execute( Sys.args() );
