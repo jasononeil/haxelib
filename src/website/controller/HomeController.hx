@@ -97,16 +97,13 @@ class HomeController extends Controller {
 			return tagJson( tagName.substr(0,tagName.length-5) );
 		}
 		else {
-			var list = projectListApi.byTag( tagName ).sure();
-			var versions = [for (p in list) p.name => p.versionObj.toSemver()];
-			var authors = [for (p in list) p.name => p.ownerObj.name];
+
+			var list = prepareProjectList( projectListApi.byTag( tagName ).sure() );
 			return new ViewResult({
 				title: 'Tag: $tagName',
 				icon: 'fa-tag',
 				description: 'A list of all projects on Haxelib with the tag "$tagName"',
 				projects: list,
-				versions: versions,
-				authors: authors,
 			}, "projectList.html");
 		}
 	}
@@ -114,16 +111,12 @@ class HomeController extends Controller {
 	@cacheRequest
 	@:route("/all")
 	public function all() {
-		var list = projectListApi.all().sure();
-		var versions = [for (p in list) p.name => p.versionObj.toSemver()];
-		var authors = [for (p in list) p.name => p.ownerObj.name];
+		var list = prepareProjectList( projectListApi.all().sure() );
 		return new ViewResult({
 			title: 'All Haxelibs',
 			icon: 'fa-star',
 			description: 'A list of every project uploaded on haxelib, sorted by popularity',
 			projects: list,
-			versions: versions,
-			authors: authors,
 		}, "projectList.html");
 	}
 
@@ -140,17 +133,25 @@ class HomeController extends Controller {
 		}
 		else {
 			context.session.set( 'searchTerm', args.v );
-			var list = projectListApi.search( args.v ).sure();
+			var list = prepareProjectList( projectListApi.search( args.v ).sure() );
 			result.setVars({
 				title: 'Search for "${args.v}"',
 				description: 'Haxelib projects that match the search word "${args.v}"',
 				projects: list,
-				versions: [for (p in list) p.name => p.versionObj.toSemver()],
-				authors: [for (p in list) p.name => p.ownerObj.name],
 				searchTerm: args.v,
 			});
 		}
 		return result;
+	}
+
+	static function prepareProjectList( list:Array<Project> ):Array<{ name:String, author:String, description:String, version:String, downloads:Int }> {
+		return [for (p in list) {
+			name: p.name,
+			author: p.ownerObj.name,
+			description: p.description,
+			version: p.versionObj.toSemver(),
+			downloads: p.downloads
+		}];
 	}
 
 	@:route("/search.json")

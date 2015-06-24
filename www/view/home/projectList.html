@@ -15,10 +15,10 @@
 			<tr>
 				<th>
 					<a href="/p/@p.name/">@p.name</a>
-					<br/><small><a href="/u/@authors.get(p.name)/">@@@authors.get(p.name)</a></small>
+					<br/><small><a href="/u/@p.author/">@@@p.author</a></small>
 				</th>
 				<td>@p.description</td>
-				<td>@versions.get(p.name)</td>
+				<td>@p.version</td>
 				<td>@p.downloads</td>
 			</tr>
 		}
