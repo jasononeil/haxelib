@@ -18,11 +18,6 @@ using buddy.Should;
 using ufront.test.TestUtils;
 using mockatoo.Mockatoo;
 
-It breaks:
-http://try.haxe.org/#079F1
-
-
-
 class ProjectControllerTest extends BuddySuite {
 	public function new() {
 
