@@ -53,6 +53,7 @@ class RSSController extends Controller {
 		var rss = Xml.createElement( "rss" );
 		rss.set( "version", "2.0" );
 		rss.set( "xmlns:atom", "http://www.w3.org/2005/Atom" );
+		rss.set( "xmlns:dc", "http://purl.org/dc/elements/1.1/" );
 		var channel = createChild( rss, "channel" );
 		var link = createChild( channel, "atom:link" );
 		link.set( "href", 'http://$hostName/rss/' );
